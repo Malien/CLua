@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+clua
+
+# Debugging ifo
+*.dSYM

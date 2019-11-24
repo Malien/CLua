@@ -12,13 +12,13 @@ void TokenStream::add(const Token& t) {
     buffer.push(t);
 }
 
-template <typename C> void TokenStream::add(const C& cont) {
-    std::lock_guard lock(bufferAccess);
-    if (buffer.empty()) condition.notify_all();
-    for (Token tkn : cont) {
-        buffer.push(tkn);
-    }
-}
+// template <typename C> void TokenStream::add(const C& cont) {
+//     std::lock_guard lock(bufferAccess);
+//     if (buffer.empty()) condition.notify_all();
+//     for (Token tkn : cont) {
+//         buffer.push(tkn);
+//     }
+// }
 
 void TokenStream::add(Token* arr, size_t length) {
     std::lock_guard lock(bufferAccess);
@@ -34,7 +34,7 @@ Token TokenStream::next() {
         // Block the thread utill items are added
         condition.wait(lock, [&]{return !buffer.empty();});
     }
-    return buffer.front;
+    return buffer.front();
 }
 
 void TokenStream::pop() {

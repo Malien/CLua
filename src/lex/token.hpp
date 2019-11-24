@@ -9,15 +9,15 @@ namespace CLua {
             std::optional<std::string> container;
             bool terminal;
             bool operator==(const Token&);
-            friend std::ostream& operator<<(const std::ostream&, const Token&);
+            // friend std::ostream& operator<<(const std::ostream&, const Token&);
 
-            Token(std::string token, std::string container, bool terminal):
+            Token(const std::string& token, const std::string& container, bool terminal = true):
                 token(token), container(container), terminal(terminal) {};
-            Token(std::string token, bool terminal):
+            Token(const std::string& token, bool terminal = true):
                 token(token), container(std::nullopt), terminal(terminal) {};
-            Token(std::string token):
-                token(token), container(std::nullopt), terminal(true) {};
         };
         const Token EPS{""};
     }
 }
+
+std::ostream& operator<<(std::ostream&, const CLua::Lex::Token&);
